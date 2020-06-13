@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue App</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/custom.css" />
+  </head>
+  <body>
+    <div id="app" class="container mt-5" style="max-width: 1000px;">
+      <h2 class="my-3 text-center">First Vue App</h2>
+      <p class="lead text-center">
+        Tasks List
+      </p>
+      <form @submit.prevent="addTask" @keyup.enter.prevent="addTask">
+        <fieldset>
+          <div class="form-group">
+            <label for="name">Task name</label>
+            <input
+              v-model.trim="name"
+              value="name"
+              type="text"
+              class="form-control"
+              id="name"
+              aria-describedby="nameMsg"
+              placeholder="Enter task name"
+            />
+            <small id="nameMsg" class="form-text text-muted">
+              Choose an inspiring name!
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Task description</label>
+            <textarea
+              v-model.trim="description"
+              value="description"
+              class="form-control"
+              id="description"
+              placeholder="Enter task description"
+              rows="3"
+            ></textarea>
+          </div>
+          <p class="mt-2 text-danger" v-if="error">
+            All fields must be filled!
+          </p>
+          <button type="submit" class="btn btn-primary">
+            Add task
+          </button>
+        </fieldset>
+      </form>
+      <div v-if="tasks.length > 0" class="mt-4">
+        <h4 class="text-center mb-4">My Tasks</h4>
+        <div v-for="(task, index) in tasks" class="card border-light">
+          <div
+            class="capitalize card-title d-flex justify-content-between align-items-center"
+          >
+            {{ task.name }}
+            <span
+              class="state badge p-2 ml-auto"
+              :class="task.state ? 'badge-success' : 'badge-danger'"
+              @click="updateTaskState(index)"
+            >
+              {{ task.state ? 'Completed' : 'Incompleted' }}
+            </span>
+            <span
+              class="description badge badge-secondary p-2 ml-1"
+              @click="showTaskDescription(index)"
+            >
+              {{ task.showDescription ? 'Hide description' : 'See description'
+              }}
+            </span>
+            <span
+              class="delete badge badge-primary p-2 ml-1"
+              @click="deleteTask(index)"
+              >&times;</span
+            >
+          </div>
+          <div class="card-body">
+            <p
+              class="capitalize shade card-text"
+              :class="task.showDescription ? 'displayed' : 'undisplayed'"
+            >
+              {{ task.description }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./js/app.js"></script>
+  </body>
+</html>

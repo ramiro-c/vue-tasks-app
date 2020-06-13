@@ -1,0 +1,14 @@
+.state,
+.description,
+.delete {
+  cursor: pointer;
+}
+.capitalize {
+  text-transform: capitalize;
+}
+.displayed {
+  display: initial;
+}
+.undisplayed {
+  display: none;
+}
